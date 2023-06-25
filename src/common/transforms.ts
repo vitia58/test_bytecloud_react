@@ -53,7 +53,7 @@ export const doctorTransforms = {
       },
     ];
 
-    for (let i = 0; i < params.length; i++) {
+    for (let i = 2; i < params.length; i++) {
       const param = params[i];
 
       const availableId = availableParams.findIndex(({ regex }) =>

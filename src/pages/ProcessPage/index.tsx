@@ -47,7 +47,6 @@ const numbersWords = [
 const ProcessPage: React.FC = () => {
   const dispatch = useDispatch();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState<AppointmentFullEntity | null>(
     null,
   );
@@ -59,7 +58,7 @@ const ProcessPage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const socket = io(default_api);
+    const socket = io('/');
 
     socket.on('appointment', (data: GetAppointmentsResponse) => {
       console.log(data);
@@ -76,17 +75,15 @@ const ProcessPage: React.FC = () => {
   };
 
   const openModal = (data: AppointmentFullEntity) => {
-    setIsModalOpen(true);
     setModalData(data);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
     setModalData(null);
   };
 
   const afterResult = (appointments?.modifiedAppointment ?? []).reduce(
-    (prev, cur) => ({ ...prev, [cur.status]: prev[cur.status] + 1 }),
+    (prev, { status }) => ({ ...prev, [status]: prev[status] + 1 }),
     {
       [Status.GREEN]: 0,
       [Status.BLUE]: 0,
@@ -95,8 +92,7 @@ const ProcessPage: React.FC = () => {
     } as Record<Status, number>,
   )!;
 
-  const resultMapped = Object.keys(afterResult)
-    .map((status) => status as Status)
+  const resultMapped = (Object.keys(afterResult) as Status[])
     .filter((status) => afterResult[status] > 0)
     .map(
       (status) =>
@@ -106,7 +102,7 @@ const ProcessPage: React.FC = () => {
     )
     .join('');
 
-  return (
+  return appointments ? (
     <PageContainer>
       <TableContainer>
         <Table>
@@ -184,7 +180,7 @@ const ProcessPage: React.FC = () => {
         </Table>
       </TableContainer>
 
-      {isModalOpen && (
+      {modalData ? (
         <ModalOverlay>
           <ModalContent>
             <h2>About appointment:</h2>
@@ -194,9 +190,13 @@ const ProcessPage: React.FC = () => {
             <ModalCloseButton onClick={closeModal}>X</ModalCloseButton>
           </ModalContent>
         </ModalOverlay>
+      ) : (
+        <></>
       )}
       <ApplyButton onClick={apply}>Apply</ApplyButton>
     </PageContainer>
+  ) : (
+    <></>
   );
 };
 

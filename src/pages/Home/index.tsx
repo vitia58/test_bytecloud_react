@@ -28,8 +28,8 @@ const Button = styled(Link)`
 const HomePage: React.FC = () => {
   return (
     <PageContainer>
-      <Button to="/insert">Insert data</Button>
-      <Button to="/process">Process data</Button>
+      <Button to="insert">Insert data</Button>
+      <Button to="process">Process data</Button>
     </PageContainer>
   );
 };

@@ -1,1 +1,1 @@
-export const default_api = 'http://localhost:7000';
+export const default_api = '/api';
