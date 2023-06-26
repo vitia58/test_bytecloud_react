@@ -5,7 +5,6 @@ export const PageContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
 `;
 
 export const TableContainer = styled.div`
@@ -42,7 +41,7 @@ export const Button = styled.button`
 `;
 
 export const ApplyButton = styled.button`
-  margin-left: 10px;
+  margin-bottom: 10px;
   padding: 15px 20px;
   font-size: 20px;
   width: 50vw;
